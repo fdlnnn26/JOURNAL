@@ -50,11 +50,6 @@ html,body{background:var(--dark);color:var(--text);font-family:'DM Sans',sans-se
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 
-.config-banner{background:rgba(192,90,90,0.1);border:1px solid rgba(192,90,90,0.3);padding:16px 24px;font-size:11px;color:#D97070;line-height:1.9;display:none}
-.config-banner code{background:rgba(0,0,0,0.3);padding:2px 7px;font-size:10px;font-family:monospace;color:#E8A0A0}
-.config-banner ol{padding-left:18px;margin-top:8px}
-.config-banner li{margin-bottom:4px}
-
 .hdr{background:var(--black);border-bottom:1px solid var(--border);padding:20px 32px;display:flex;justify-content:space-between;align-items:center}
 .hdr-logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;letter-spacing:.15em;color:var(--text)}
 .hdr-logo span{color:var(--gold)}
@@ -188,18 +183,6 @@ td:last-child{text-align:right}
   <div class="loading-logo">FDN <span>CAPITAL</span></div>
   <div class="loading-bar-wrap"><div class="loading-bar" id="loading-bar"></div></div>
   <div class="loading-txt" id="loading-txt">Initializing</div>
-</div>
-
-<!-- CONFIG BANNER -->
-<div class="config-banner" id="config-banner">
-  ⚠ <strong>Firebase belum dikonfigurasi.</strong> Edit bagian <code>FIREBASE CONFIG</code> di dalam file HTML ini.<br>
-  <ol>
-    <li>Buka <strong>console.firebase.google.com</strong> → buat project baru (gratis)</li>
-    <li>Pilih <strong>Authentication</strong> → Enable → <strong>Email/Password</strong></li>
-    <li>Pilih <strong>Firestore Database</strong> → Create database → Start in test mode</li>
-    <li>Klik ⚙ Project Settings → Your apps → Web (<code>&lt;/&gt;</code>) → Copy config</li>
-    <li>Paste config ke dalam kode, ganti semua nilai <code>GANTI_DENGAN_...</code></li>
-  </ol>
 </div>
 
 <!-- AUTH SCREEN -->
@@ -402,33 +385,18 @@ td:last-child{text-align:right}
 
 <script type="module">
 // ════════════════════════════════════════════════════════
-//  🔧 FIREBASE CONFIG
-//  Ganti semua nilai di bawah ini dengan config dari Firebase Console kamu
-//  Firebase Console → Project Settings → Your apps → Web → firebaseConfig
+//  🔧 FIREBASE CONFIG — GANTI NILAI DI BAWAH INI
+//  Ambil dari: Firebase Console → Project Settings → Your apps → Web
 // ════════════════════════════════════════════════════════
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyClc59Muo0ajiNjvC5s0rq74BtDrce6rp8",
-    authDomain: "journal-97254.firebaseapp.com",
-    projectId: "journal-97254",
-    storageBucket: "journal-97254.firebasestorage.app",
-    messagingSenderId: "101188824456",
-    appId: "1:101188824456:web:a0ca25a26e63704b361e3d",
-    measurementId: "G-0RLFMJFBDP"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>
+const FIREBASE_CONFIG = {
+ apiKey: "AIzaSyClc59Muo0ajiNjvC5s0rq74BtDrce6rp8",
+  authDomain: "journal-97254.firebaseapp.com",
+  projectId: "journal-97254",
+  storageBucket: "journal-97254.firebasestorage.app",
+  messagingSenderId: "101188824456",
+  appId: "1:101188824456:web:a0ca25a26e63704b361e3d",
+  measurementId: "G-0RLFMJFBDP"
+};
 // ════════════════════════════════════════════════════════
 
 import { initializeApp }           from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
@@ -438,7 +406,6 @@ import { getAuth, onAuthStateChanged, signInWithEmailAndPassword,
 import { getFirestore, doc, getDoc, setDoc, serverTimestamp }
   from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
-// ── Check config ──
 const isConfigured = !Object.values(FIREBASE_CONFIG).some(v => v.startsWith('GANTI_'));
 
 function setProgress(pct, txt) {
@@ -455,7 +422,7 @@ function hideLoading() {
 setProgress(20, 'Checking config...');
 
 if (!isConfigured) {
-  document.getElementById('config-banner').style.display = 'block';
+  alert('⚠ Firebase belum dikonfigurasi! Buka file HTML dan isi FIREBASE_CONFIG dengan nilai dari Firebase Console kamu.');
   hideLoading();
   document.getElementById('auth-screen').style.display = 'flex';
 }
@@ -468,10 +435,8 @@ if (isConfigured) {
   setProgress(50, 'Connecting to Firebase...');
 }
 
-// ── State ──
 let trades = [], nextId = 1, currentUser = null, saveDebounce = null, tickInterval = null;
 
-// ── Auth state ──
 if (isConfigured) {
   onAuthStateChanged(auth, async user => {
     setProgress(80, 'Loading your data...');
@@ -491,7 +456,6 @@ if (isConfigured) {
   });
 }
 
-// ── Auth functions exposed to window ──
 window.switchAuthTab = (tab) => {
   document.querySelectorAll('.auth-tab').forEach((t,i) => t.classList.toggle('active', i===(tab==='login'?0:1)));
   document.getElementById('form-login').classList.toggle('active', tab==='login');
@@ -508,13 +472,13 @@ function setBtnLoading(id, loading, txt) {
 
 function fireMsg(code) {
   return ({
-    'auth/user-not-found':      'Akun tidak ditemukan.',
-    'auth/wrong-password':      'Password salah.',
-    'auth/invalid-credential':  'Email atau password salah.',
-    'auth/email-already-in-use':'Email sudah terdaftar.',
-    'auth/invalid-email':       'Format email tidak valid.',
-    'auth/weak-password':       'Password terlalu lemah (min 6 karakter).',
-    'auth/too-many-requests':   'Terlalu banyak percobaan. Tunggu sebentar.',
+    'auth/user-not-found':         'Akun tidak ditemukan.',
+    'auth/wrong-password':         'Password salah.',
+    'auth/invalid-credential':     'Email atau password salah.',
+    'auth/email-already-in-use':   'Email sudah terdaftar.',
+    'auth/invalid-email':          'Format email tidak valid.',
+    'auth/weak-password':          'Password terlalu lemah (min 6 karakter).',
+    'auth/too-many-requests':      'Terlalu banyak percobaan. Tunggu sebentar.',
     'auth/network-request-failed': 'Masalah koneksi. Cek internet kamu.',
   })[code] || 'Error: ' + code;
 }
@@ -562,7 +526,6 @@ window.doResetPassword = async () => {
   } catch(e) { showToast('FDN', fireMsg(e.code), '#D97070'); }
 };
 
-// ── Firestore ──
 async function loadTrades(uid) {
   try {
     const snap = await getDoc(doc(db, 'trades', uid));
@@ -599,7 +562,6 @@ function setSaveStatus(s) {
   lbl.textContent = s==='saved'?'Saved':s==='saving'?'Saving...':s==='error'?'Error':'—';
 }
 
-// ── Show App ──
 function showApp(user) {
   document.getElementById('auth-screen').style.display='none';
   document.getElementById('app').style.display='block';
@@ -615,7 +577,6 @@ function showApp(user) {
   tick();
 }
 
-// ── Trading core ──
 const SYMS = ['XAUTUSDT','BTCUSDT','ETHUSDT','SOLUSDT','BNBUSDT','XRPUSDT','DOGEUSDT','ADAUSDT','AVAXUSDT'];
 const SYM_D = {XAUTUSDT:'XAU/USD',BTCUSDT:'BTC/USDT',ETHUSDT:'ETH/USDT',SOLUSDT:'SOL/USDT',BNBUSDT:'BNB/USDT',XRPUSDT:'XRP/USDT',DOGEUSDT:'DOGE/USDT',ADAUSDT:'ADA/USDT',AVAXUSDT:'AVAX/USDT'};
 let livePrices={}, prevPrices={}, histFilter='all';
