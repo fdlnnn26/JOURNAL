@@ -204,66 +204,37 @@ td:last-child{text-align:right}
    MOBILE RESPONSIVE
 ═══════════════════════════════════════ */
 @media (max-width: 768px) {
-  /* Header */
   .hdr{padding:12px 16px}
   .hdr-right{gap:8px}
   .save-status{display:none}
   .user-name{display:none}
   .live-pill{padding:5px 8px}
-
-  /* Ticker */
   .price-ticker{padding:6px 16px;gap:16px}
-
-  /* Tabs */
   .tabs{padding:0 16px}
   .tab{padding:12px 12px;font-size:9px;letter-spacing:.15em}
-
-  /* Main padding */
   .main{padding:16px}
-
-  /* Stats — 2 columns on mobile */
   .stat-row{grid-template-columns:repeat(2,1fr);gap:8px}
   .stat-val{font-size:22px}
-  /* Last stat full width */
   .stat-row .stat-card:last-child{grid-column:1/-1}
-
-  /* Table */
   .tbl-head{padding:12px 16px}
   th,td{padding:10px 12px}
-
-  /* Bottom grid — stack */
   .bottom-grid{grid-template-columns:1fr}
-
-  /* Notes — 1 column */
   .notes-grid{grid-template-columns:1fr}
-
-  /* Modal */
   .modal-body{padding:16px}
   .modal-hdr{padding:16px 16px 12px}
   .modal-footer{padding:10px 16px 16px}
   .form-row-2{grid-template-columns:1fr}
-
-  /* Toast */
   .notify-toast{bottom:16px;right:16px;left:16px;max-width:none}
-
-  /* Account */
   .acc-section{padding:16px}
 }
 
 @media (max-width: 480px) {
-  /* Stats — 1 column on very small phones */
   .stat-row{grid-template-columns:1fr}
   .stat-row .stat-card:last-child{grid-column:auto}
   .stat-val{font-size:28px}
-
-  /* Header collapse */
   .hdr{padding:10px 14px}
   .btn-add{font-size:9px;padding:8px 14px;letter-spacing:.12em}
-
-  /* Main */
   .main{padding:12px}
-
-  /* Tabs */
   .tab{padding:11px 10px;font-size:8px}
 }
 </style>
@@ -438,7 +409,10 @@ td:last-child{text-align:right}
         <div class="form-group">
           <label class="form-label">Symbol</label>
           <select class="form-input" id="f-symbol">
-            <optgroup label="Gold / Spot"><option value="XAUUSD">XAU/USD Spot (gold-api.com)</option><option value="XAUTUSDT">XAUT/USDT (Tether Gold token)</option></optgroup>
+            <optgroup label="Gold / Spot">
+              <option value="XAUUSD">XAU/USD Spot (gold-api.com)</option>
+              <option value="XAUTUSDT">XAUT/USDT (mirrors XAU/USD spot)</option>
+            </optgroup>
             <optgroup label="Crypto">
               <option value="BTCUSDT">BTC/USDT</option><option value="ETHUSDT">ETH/USDT</option>
               <option value="SOLUSDT">SOL/USDT</option><option value="BNBUSDT">BNB/USDT</option>
@@ -676,37 +650,37 @@ function showApp(user) {
 }
 
 // ════════════════════════════════════════════════════════
-//  PRICE FETCHING — Split architecture
+//  PRICE FETCHING
 //
-//  XAU/USD spot  → gold-api.com (free, no key, CORS OK)
-//                  → GoldPrice.org API (fallback)
-//                  → goldpriceapi.com (fallback)
+//  XAU/USD spot  → gold-api.com (+2 offset untuk akurasi global)
+//                → GoldPriceZ (fallback, juga +2)
+//
+//  XAUTUSDT      → mirror dari XAU/USD spot (bukan Binance token)
 //
 //  Crypto        → Binance → CoinGecko → Kraken
-//
-//  XAU/USD & XAUT/USDT ditampilkan TERPISAH:
-//  - XAUUSD  = spot harga emas (dari gold-api.com)
-//  - XAUTUSDT = harga token Tether Gold di Binance (beda ~$3-5)
 // ════════════════════════════════════════════════════════
 
-// XAUTUSDT tetap ada untuk yang trade di Binance (token)
-// Tambah XAUUSD sebagai instrument baru = spot gold
 const SYMS = ['XAUUSD','XAUTUSDT','BTCUSDT','ETHUSDT','SOLUSDT','BNBUSDT','XRPUSDT','DOGEUSDT','ADAUSDT','AVAXUSDT'];
 const SYM_D = {
-  XAUUSD:   'XAU/USD',   // ← spot gold (dari gold-api.com)
-  XAUTUSDT: 'XAUT/USDT', // ← Tether Gold token (dari Binance)
+  XAUUSD:   'XAU/USD',
+  XAUTUSDT: 'XAUT/USDT',
   BTCUSDT:'BTC/USDT', ETHUSDT:'ETH/USDT', SOLUSDT:'SOL/USDT',
   BNBUSDT:'BNB/USDT', XRPUSDT:'XRP/USDT', DOGEUSDT:'DOGE/USDT',
   ADAUSDT:'ADA/USDT', AVAXUSDT:'AVAX/USDT'
 };
 
-// Crypto syms yang di-fetch dari Binance/CoinGecko/Kraken (exclude XAUUSD)
-const CRYPTO_SYMS = ['XAUTUSDT','BTCUSDT','ETHUSDT','SOLUSDT','BNBUSDT','XRPUSDT','DOGEUSDT','ADAUSDT','AVAXUSDT'];
+// ── XAUTUSDT dihapus dari CRYPTO_SYMS — datanya dari XAU spot ──
+const CRYPTO_SYMS = ['BTCUSDT','ETHUSDT','SOLUSDT','BNBUSDT','XRPUSDT','DOGEUSDT','ADAUSDT','AVAXUSDT'];
+
 const CG_IDS = {
   BTCUSDT:'bitcoin', ETHUSDT:'ethereum', SOLUSDT:'solana',
   BNBUSDT:'binancecoin', XRPUSDT:'ripple', DOGEUSDT:'dogecoin',
-  ADAUSDT:'cardano', AVAXUSDT:'avalanche-2', XAUTUSDT:'tether-gold'
+  ADAUSDT:'cardano', AVAXUSDT:'avalanche-2'
+  // XAUTUSDT dihapus — tidak di-fetch dari CoinGecko
 };
+
+// Offset koreksi XAU agar sesuai rata-rata global
+const XAU_OFFSET = 2;
 
 let livePrices={}, prevPrices={}, histFilter='all';
 let goldSource='—', cryptoSource='—';
@@ -734,43 +708,39 @@ const calcProg = t => {
 
 // ── XAU SPOT SOURCES ─────────────────────────────────
 
-// gold-api.com — free, no key, CORS enabled, no rate limit
 async function fetchGoldAPI() {
   const r = await fetch('https://api.gold-api.com/price/XAU', { signal: AbortSignal.timeout(6000) });
   if (!r.ok) throw new Error('gold-api ' + r.status);
   const d = await r.json();
-  // response: { price: 4558.90, ... }
   if (!d.price) throw new Error('gold-api no price');
-  return { price: parseFloat(d.price), source: 'gold-api.com' };
+  // +2 offset untuk menyesuaikan rata-rata harga global
+  return { price: parseFloat(d.price) + XAU_OFFSET, source: 'gold-api.com' };
 }
 
-// GoldPriceZ.com public API (fallback)
 async function fetchGoldPriceZ() {
   const r = await fetch('https://data-asg.goldprice.org/dbXRates/USD', { signal: AbortSignal.timeout(6000) });
   if (!r.ok) throw new Error('goldpricez ' + r.status);
   const d = await r.json();
-  // response: { items: [{ xauPrice: 4500 }] }
   const price = d?.items?.[0]?.xauPrice;
   if (!price) throw new Error('goldpricez no price');
-  return { price: parseFloat(price), source: 'GoldPriceZ' };
+  // +2 offset untuk menyesuaikan rata-rata harga global
+  return { price: parseFloat(price) + XAU_OFFSET, source: 'GoldPriceZ' };
 }
-
-// Backup: goldapi.io — needs free key but returns CORS headers (user can add own key)
-// Skipped here since requires API key — if user wants to add: https://www.goldapi.io/
 
 async function fetchXauSpot() {
   const sources = [fetchGoldAPI, fetchGoldPriceZ];
   for (const fn of sources) {
     try {
       const { price, source } = await fn();
-      if (price > 100 && price < 100000) { // sanity check
+      if (price > 100 && price < 100000) {
         livePrices['XAUUSD'] = price;
+        // XAUTUSDT mirror dari XAU/USD spot (bukan Binance XAUT token)
+        livePrices['XAUTUSDT'] = price;
         goldSource = source;
         return;
       }
     } catch(e) { console.warn('Gold spot fetch failed:', e.message); }
   }
-  // All failed — keep last cached value, mark stale
   if (!livePrices['XAUUSD']) goldSource = 'unavailable';
 }
 
@@ -834,18 +804,14 @@ async function fetchCrypto() {
 
 async function fetchPrices() {
   prevPrices = { ...livePrices };
-
-  // Fetch XAU spot & crypto in parallel
   await Promise.allSettled([fetchXauSpot(), fetchCrypto()]);
 
   const hasData = Object.keys(livePrices).length > 0;
   const xauOk = !!livePrices['XAUUSD'];
-  const cryptoOk = !!livePrices['BTCUSDT'];
 
   if (hasData) {
     document.getElementById('live-dot').style.background = '#4A9E6A';
     document.getElementById('live-label').textContent = 'Live';
-    // Show gold source in pill since that's the primary concern
     const src = xauOk ? goldSource : cryptoSource;
     document.getElementById('price-source').textContent = '· ' + src;
   } else {
