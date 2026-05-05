@@ -15,6 +15,7 @@
 }
 html,body{background:var(--dark);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;min-height:100vh}
 
+/* ── LOADING ── */
 #loading-screen{position:fixed;inset:0;background:var(--black);z-index:2000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px;transition:opacity .4s}
 .loading-logo{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:500;letter-spacing:.2em;color:var(--text)}
 .loading-logo span{color:var(--gold)}
@@ -22,8 +23,9 @@ html,body{background:var(--dark);color:var(--text);font-family:'DM Sans',sans-se
 .loading-bar{height:100%;background:var(--gold);width:0%;transition:width .4s}
 .loading-txt{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--text-subtle)}
 
-#auth-screen{position:fixed;inset:0;background:var(--black);z-index:1000;display:none;align-items:center;justify-content:center}
-.auth-wrap{width:420px;padding:0 20px}
+/* ── AUTH ── */
+#auth-screen{position:fixed;inset:0;background:var(--black);z-index:1000;display:none;align-items:center;justify-content:center;padding:16px}
+.auth-wrap{width:100%;max-width:420px}
 .auth-logo{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:500;letter-spacing:.2em;color:var(--text);text-align:center;margin-bottom:4px}
 .auth-logo span{color:var(--gold)}
 .auth-tagline{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--text-subtle);text-align:center;margin-bottom:40px}
@@ -50,19 +52,21 @@ html,body{background:var(--dark);color:var(--text);font-family:'DM Sans',sans-se
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 
-.hdr{background:var(--black);border-bottom:1px solid var(--border);padding:20px 32px;display:flex;justify-content:space-between;align-items:center}
+/* ── HEADER ── */
+.hdr{background:var(--black);border-bottom:1px solid var(--border);padding:16px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
 .hdr-logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;letter-spacing:.15em;color:var(--text)}
 .hdr-logo span{color:var(--gold)}
 .hdr-tag{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--text-subtle);margin-top:3px}
-.hdr-right{display:flex;gap:12px;align-items:center}
-.live-pill{display:flex;align-items:center;gap:6px;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-subtle);border:1px solid var(--border);padding:6px 14px}
-.live-dot{width:6px;height:6px;border-radius:50%;background:#4A9E6A}
-.btn-add{background:var(--gold);color:var(--black);font-family:'DM Sans',sans-serif;font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;border:none;padding:10px 22px;cursor:pointer;transition:background .2s}
+.hdr-right{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.live-pill{display:flex;align-items:center;gap:6px;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-subtle);border:1px solid var(--border);padding:6px 12px}
+.live-dot{width:6px;height:6px;border-radius:50%;background:#4A9E6A;flex-shrink:0}
+.price-source{font-size:8px;letter-spacing:.1em;color:var(--text-subtle);opacity:.6}
+.btn-add{background:var(--gold);color:var(--black);font-family:'DM Sans',sans-serif;font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;border:none;padding:10px 18px;cursor:pointer;transition:background .2s;white-space:nowrap}
 .btn-add:hover{background:var(--gold-light)}
-.user-bar{display:flex;align-items:center;gap:10px}
-.user-avatar{width:28px;height:28px;border:1px solid var(--border);background:var(--dark-3);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--gold)}
-.user-name{font-size:10px;color:var(--text-muted);max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.btn-logout{background:transparent;border:1px solid var(--border);color:var(--text-subtle);font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:.15em;text-transform:uppercase;padding:6px 12px;cursor:pointer;transition:all .2s}
+.user-bar{display:flex;align-items:center;gap:8px}
+.user-avatar{width:28px;height:28px;border:1px solid var(--border);background:var(--dark-3);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--gold);flex-shrink:0}
+.user-name{font-size:10px;color:var(--text-muted);max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.btn-logout{background:transparent;border:1px solid var(--border);color:var(--text-subtle);font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:.15em;text-transform:uppercase;padding:6px 10px;cursor:pointer;transition:all .2s;white-space:nowrap}
 .btn-logout:hover{border-color:rgba(192,90,90,0.4);color:#D97070}
 .save-status{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-subtle);display:flex;align-items:center;gap:6px}
 .save-dot{width:5px;height:5px;border-radius:50%;background:var(--text-subtle);transition:background .3s}
@@ -70,41 +74,54 @@ html,body{background:var(--dark);color:var(--text);font-family:'DM Sans',sans-se
 .save-status.saving .save-dot{background:var(--gold);animation:pulse 1s infinite}
 .save-status.error .save-dot{background:#D97070}
 
-.price-ticker{background:var(--black);border-bottom:1px solid var(--border);padding:8px 32px;display:flex;gap:28px;overflow-x:auto;scrollbar-width:none}
+/* ── PRICE TICKER ── */
+.price-ticker{background:var(--black);border-bottom:1px solid var(--border);padding:8px 24px;display:flex;gap:20px;overflow-x:auto;scrollbar-width:none}
 .price-ticker::-webkit-scrollbar{display:none}
-.ticker-item{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.ticker-item{display:flex;align-items:center;gap:7px;flex-shrink:0}
 .ticker-sym{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-subtle)}
 .ticker-price{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--text)}
 .ticker-chg{font-size:9px}
-.tabs{display:flex;border-bottom:1px solid var(--border);background:var(--dark-2);padding:0 32px}
-.tab{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-subtle);padding:14px 20px;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
+
+/* ── TABS ── */
+.tabs{display:flex;border-bottom:1px solid var(--border);background:var(--dark-2);padding:0 24px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-subtle);padding:14px 16px;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;flex-shrink:0}
 .tab:hover{color:var(--text-muted)}.tab.active{color:var(--gold);border-bottom-color:var(--gold)}
-.main{padding:32px;max-width:1400px;margin:0 auto}
-.stat-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:28px}
-.stat-card{background:var(--dark-3);border:1px solid var(--border);padding:20px 20px 16px;position:relative;overflow:hidden;transition:border-color .3s}
+
+/* ── MAIN / STATS ── */
+.main{padding:24px;max-width:1400px;margin:0 auto}
+.stat-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:24px}
+.stat-card{background:var(--dark-3);border:1px solid var(--border);padding:18px 16px 14px;position:relative;overflow:hidden;transition:border-color .3s}
 .stat-card:hover{border-color:var(--border-hover)}
 .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:var(--gold);opacity:0;transition:opacity .3s}
 .stat-card:hover::before{opacity:.5}
 .stat-label{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--text-subtle);margin-bottom:10px}
-.stat-val{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;line-height:1;color:var(--text)}
+.stat-val{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;line-height:1;color:var(--text)}
 .stat-val.pos{color:#6BBF8A}.stat-val.neg{color:#D97070}
 .stat-sub{font-size:10px;color:var(--text-subtle);margin-top:6px}
+
+/* ── SECTION LABEL ── */
 .sec-label{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:10px}
 .sec-label::before{content:'';display:block;width:20px;height:1px;background:var(--gold);opacity:.6}
-.tbl-wrap{background:var(--dark-3);border:1px solid var(--border);overflow:hidden;margin-bottom:28px}
-.tbl-head{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;border-bottom:1px solid var(--border)}
+
+/* ── TABLE ── */
+.tbl-wrap{background:var(--dark-3);border:1px solid var(--border);overflow:hidden;margin-bottom:24px}
+.tbl-scroll{overflow-x:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.tbl-head{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px}
 .tbl-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;color:var(--text)}
-.tbl-filter{display:flex;gap:8px}
-.filter-btn{font-size:9px;letter-spacing:.15em;text-transform:uppercase;background:transparent;border:1px solid var(--border);color:var(--text-subtle);padding:5px 12px;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.tbl-filter{display:flex;gap:6px;flex-wrap:wrap}
+.filter-btn{font-size:9px;letter-spacing:.15em;text-transform:uppercase;background:transparent;border:1px solid var(--border);color:var(--text-subtle);padding:5px 10px;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
 .filter-btn.active,.filter-btn:hover{border-color:var(--gold);color:var(--gold)}
-table{width:100%;border-collapse:collapse}
-th{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-subtle);padding:12px 20px;text-align:left;border-bottom:1px solid var(--border);font-weight:400}
+table{width:100%;border-collapse:collapse;min-width:600px}
+th{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-subtle);padding:12px 16px;text-align:left;border-bottom:1px solid var(--border);font-weight:400;white-space:nowrap}
 th:last-child{text-align:right}
-td{font-size:12px;color:var(--text-muted);padding:14px 20px;border-bottom:1px solid rgba(184,151,90,0.07);transition:background .2s;vertical-align:middle}
+td{font-size:12px;color:var(--text-muted);padding:13px 16px;border-bottom:1px solid rgba(184,151,90,0.07);transition:background .2s;vertical-align:middle}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:rgba(184,151,90,0.04)}
-.td-sym{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--text);font-weight:400}
-.badge{display:inline-block;font-size:8px;letter-spacing:.15em;text-transform:uppercase;padding:3px 9px;font-weight:500}
+.td-sym{font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--text);font-weight:400}
+
+/* ── BADGES ── */
+.badge{display:inline-block;font-size:8px;letter-spacing:.15em;text-transform:uppercase;padding:3px 8px;font-weight:500}
 .badge.long{background:rgba(74,158,106,0.15);color:#6BBF8A;border:1px solid rgba(74,158,106,0.3)}
 .badge.short{background:rgba(192,90,90,0.15);color:#D97070;border:1px solid rgba(192,90,90,0.3)}
 .badge.open{background:rgba(184,151,90,0.12);color:var(--gold);border:1px solid var(--border)}
@@ -113,67 +130,142 @@ tr:hover td{background:rgba(184,151,90,0.04)}
 .badge.limit{background:rgba(184,151,90,0.08);color:var(--gold-dark);border:1px solid rgba(184,151,90,0.2)}
 .pnl-pos{color:#6BBF8A;font-weight:400}.pnl-neg{color:#D97070;font-weight:400}.pnl-neutral{color:var(--text-muted)}
 td:last-child{text-align:right}
-.row-action{display:flex;gap:6px;justify-content:flex-end}
-.act-btn{background:transparent;border:1px solid var(--border);color:var(--text-subtle);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.row-action{display:flex;gap:5px;justify-content:flex-end}
+.act-btn{background:transparent;border:1px solid var(--border);color:var(--text-subtle);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:4px 8px;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
 .act-btn:hover{border-color:var(--border-hover);color:var(--text)}
 .act-btn.del:hover{border-color:rgba(192,90,90,0.4);color:#D97070}
-.bottom-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.chart-box{background:var(--dark-3);border:1px solid var(--border);padding:24px}
-.chart-lbl{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-subtle);margin-bottom:20px}
-.equity-chart{width:100%;height:140px}
-.breakdown-box{background:var(--dark-3);border:1px solid var(--border);padding:24px}
+
+/* ── BOTTOM GRID ── */
+.bottom-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.chart-box{background:var(--dark-3);border:1px solid var(--border);padding:20px}
+.chart-lbl{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-subtle);margin-bottom:16px}
+.equity-chart{width:100%;height:130px}
+.breakdown-box{background:var(--dark-3);border:1px solid var(--border);padding:20px}
 .bk-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
 .bk-row:last-child{border-bottom:none}
-.bk-sym{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--text)}
-.bk-bar-wrap{flex:1;margin:0 16px;height:4px;background:rgba(184,151,90,0.1)}
+.bk-sym{font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--text)}
+.bk-bar-wrap{flex:1;margin:0 12px;height:4px;background:rgba(184,151,90,0.1)}
 .bk-bar{height:100%}
-.bk-val{font-size:11px;min-width:56px;text-align:right}
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:200;align-items:center;justify-content:center}
+.bk-val{font-size:11px;min-width:52px;text-align:right}
+
+/* ── MODAL ── */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:200;align-items:center;justify-content:center;padding:16px}
 .overlay.open{display:flex}
-.modal{background:var(--dark-2);border:1px solid var(--border);width:500px;max-height:85vh;overflow-y:auto}
-.modal-hdr{padding:24px 28px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
-.modal-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:var(--text)}
+.modal{background:var(--dark-2);border:1px solid var(--border);width:100%;max-width:500px;max-height:90vh;overflow-y:auto}
+.modal-hdr{padding:20px 24px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.modal-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;color:var(--text)}
 .modal-close{background:transparent;border:none;color:var(--text-subtle);font-size:18px;cursor:pointer;padding:4px 8px}
 .modal-close:hover{color:var(--text)}
-.modal-body{padding:24px 28px}
-.form-group{margin-bottom:16px}
+.modal-body{padding:20px 24px}
+.form-group{margin-bottom:14px}
 .form-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-subtle);display:block;margin-bottom:7px}
-.form-input{width:100%;background:var(--dark-3);border:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:300;padding:11px 14px;outline:none;transition:border-color .2s;appearance:none}
+.form-input{width:100%;background:var(--dark-3);border:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:300;padding:10px 12px;outline:none;transition:border-color .2s;appearance:none}
 .form-input::placeholder{color:var(--text-subtle)}
 .form-input:focus{border-color:var(--gold)}
-.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.modal-footer{padding:16px 28px 24px;display:flex;gap:10px;justify-content:flex-end}
-.btn-cancel{background:transparent;border:1px solid var(--border);color:var(--text-muted);font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:.15em;text-transform:uppercase;padding:10px 20px;cursor:pointer;transition:all .2s}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.modal-footer{padding:14px 24px 20px;display:flex;gap:8px;justify-content:flex-end}
+.btn-cancel{background:transparent;border:1px solid var(--border);color:var(--text-muted);font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:.15em;text-transform:uppercase;padding:10px 16px;cursor:pointer;transition:all .2s}
 .btn-cancel:hover{border-color:var(--border-hover);color:var(--text)}
-.btn-save{background:var(--gold);color:var(--black);font-family:'DM Sans',sans-serif;font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;border:none;padding:10px 28px;cursor:pointer;transition:background .2s}
+.btn-save{background:var(--gold);color:var(--black);font-family:'DM Sans',sans-serif;font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;border:none;padding:10px 24px;cursor:pointer;transition:background .2s}
 .btn-save:hover{background:var(--gold-light)}
+
+/* ── NOTES ── */
 .notes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.note-card{background:var(--dark-3);border:1px solid var(--border);padding:18px;transition:border-color .3s}
+.note-card{background:var(--dark-3);border:1px solid var(--border);padding:16px;transition:border-color .3s}
 .note-card:hover{border-color:var(--border-hover)}
-.note-sym{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--text);margin-bottom:6px}
+.note-sym{font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--text);margin-bottom:6px}
 .note-date{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-subtle);margin-bottom:10px}
 .note-txt{font-size:12px;color:var(--text-muted);line-height:1.7}
 .note-tag{font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-top:10px;opacity:.7}
-.empty{text-align:center;padding:48px 24px;color:var(--text-subtle);font-size:12px;letter-spacing:.1em}
-.empty-icon{font-family:'Cormorant Garamond',serif;font-size:40px;opacity:.2;margin-bottom:12px;color:var(--gold)}
+
+/* ── MISC ── */
+.empty{text-align:center;padding:40px 24px;color:var(--text-subtle);font-size:12px;letter-spacing:.1em}
+.empty-icon{font-family:'Cormorant Garamond',serif;font-size:36px;opacity:.2;margin-bottom:12px;color:var(--gold)}
 .page{display:none}.page.active{display:block}
-.progress-wrap{width:80px}
+.progress-wrap{width:72px}
 .progress-bar{width:100%;height:3px;background:rgba(184,151,90,0.12);margin-top:4px}
 .progress-fill{height:100%;transition:width .5s}
 .progress-txt{font-size:9px;color:var(--text-subtle);margin-top:2px}
-.notify-toast{position:fixed;bottom:32px;right:32px;z-index:999;background:var(--dark-2);border:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;gap:12px;opacity:0;transform:translateY(8px);transition:all .3s;pointer-events:none;max-width:320px}
+.notify-toast{position:fixed;bottom:24px;right:24px;z-index:999;background:var(--dark-2);border:1px solid var(--border);padding:12px 18px;display:flex;align-items:center;gap:10px;opacity:0;transform:translateY(8px);transition:all .3s;pointer-events:none;max-width:280px}
 .notify-toast.show{opacity:1;transform:translateY(0)}
 .toast-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.toast-sym{font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--text)}
+.toast-sym{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--text)}
 .toast-msg{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-subtle);margin-top:2px}
-.acc-section{background:var(--dark-3);border:1px solid var(--border);padding:24px;margin-bottom:20px}
-.acc-section-title{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--text);margin-bottom:18px}
-.acc-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)}
+.acc-section{background:var(--dark-3);border:1px solid var(--border);padding:20px;margin-bottom:16px}
+.acc-section-title{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--text);margin-bottom:16px}
+.acc-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px}
 .acc-row:last-child{border-bottom:none}
 .acc-key{font-size:10px;letter-spacing:.1em;color:var(--text-muted)}
 .acc-val{font-size:11px;color:var(--text-subtle)}
-.btn-danger{background:transparent;border:1px solid rgba(192,90,90,0.3);color:#D97070;font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:.15em;text-transform:uppercase;padding:6px 14px;cursor:pointer;transition:all .2s}
+.btn-danger{background:transparent;border:1px solid rgba(192,90,90,0.3);color:#D97070;font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:.15em;text-transform:uppercase;padding:6px 12px;cursor:pointer;transition:all .2s}
 .btn-danger:hover{background:rgba(192,90,90,0.1);border-color:rgba(192,90,90,0.6)}
+
+/* ═══════════════════════════════════════
+   MOBILE RESPONSIVE
+═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Header */
+  .hdr{padding:12px 16px}
+  .hdr-right{gap:8px}
+  .save-status{display:none}
+  .user-name{display:none}
+  .live-pill{padding:5px 8px}
+
+  /* Ticker */
+  .price-ticker{padding:6px 16px;gap:16px}
+
+  /* Tabs */
+  .tabs{padding:0 16px}
+  .tab{padding:12px 12px;font-size:9px;letter-spacing:.15em}
+
+  /* Main padding */
+  .main{padding:16px}
+
+  /* Stats — 2 columns on mobile */
+  .stat-row{grid-template-columns:repeat(2,1fr);gap:8px}
+  .stat-val{font-size:22px}
+  /* Last stat full width */
+  .stat-row .stat-card:last-child{grid-column:1/-1}
+
+  /* Table */
+  .tbl-head{padding:12px 16px}
+  th,td{padding:10px 12px}
+
+  /* Bottom grid — stack */
+  .bottom-grid{grid-template-columns:1fr}
+
+  /* Notes — 1 column */
+  .notes-grid{grid-template-columns:1fr}
+
+  /* Modal */
+  .modal-body{padding:16px}
+  .modal-hdr{padding:16px 16px 12px}
+  .modal-footer{padding:10px 16px 16px}
+  .form-row-2{grid-template-columns:1fr}
+
+  /* Toast */
+  .notify-toast{bottom:16px;right:16px;left:16px;max-width:none}
+
+  /* Account */
+  .acc-section{padding:16px}
+}
+
+@media (max-width: 480px) {
+  /* Stats — 1 column on very small phones */
+  .stat-row{grid-template-columns:1fr}
+  .stat-row .stat-card:last-child{grid-column:auto}
+  .stat-val{font-size:28px}
+
+  /* Header collapse */
+  .hdr{padding:10px 14px}
+  .btn-add{font-size:9px;padding:8px 14px;letter-spacing:.12em}
+
+  /* Main */
+  .main{padding:12px}
+
+  /* Tabs */
+  .tab{padding:11px 10px;font-size:8px}
+}
 </style>
 </head>
 <body>
@@ -238,7 +330,11 @@ td:last-child{text-align:right}
     </div>
     <div class="hdr-right">
       <div class="save-status" id="save-status"><div class="save-dot"></div><span id="save-label">—</span></div>
-      <div class="live-pill"><div class="live-dot" id="live-dot"></div><span id="live-label">Connecting</span></div>
+      <div class="live-pill">
+        <div class="live-dot" id="live-dot"></div>
+        <span id="live-label">Connecting</span>
+        <span class="price-source" id="price-source"></span>
+      </div>
       <button class="btn-add" onclick="openModal()">+ Log Trade</button>
       <div class="user-bar">
         <div class="user-avatar" id="user-avatar">—</div>
@@ -260,13 +356,15 @@ td:last-child{text-align:right}
       <div class="stat-row" id="stat-row"></div>
       <div class="sec-label">Live Positions</div>
       <div class="tbl-wrap">
+        <div class="tbl-scroll">
         <table>
-          <thead><tr><th>Symbol</th><th>Direction</th><th>Entry</th><th>Current Price</th><th>SL / TP</th><th>Size</th><th>Open P&L</th><th>Progress</th><th>Status</th><th></th></tr></thead>
+          <thead><tr><th>Symbol</th><th>Dir</th><th>Entry</th><th>Current</th><th>SL / TP</th><th>Size</th><th>Open P&L</th><th>Progress</th><th>Status</th><th></th></tr></thead>
           <tbody id="open-tbody"></tbody>
         </table>
+        </div>
       </div>
       <div class="bottom-grid">
-        <div class="chart-box"><div class="chart-lbl">Equity Curve</div><svg class="equity-chart" id="equity-svg" viewBox="0 0 440 140" fill="none"></svg></div>
+        <div class="chart-box"><div class="chart-lbl">Equity Curve</div><svg class="equity-chart" id="equity-svg" viewBox="0 0 440 130" fill="none"></svg></div>
         <div class="breakdown-box"><div class="chart-lbl">P&L by Symbol</div><div id="breakdown-list"></div></div>
       </div>
     </div>
@@ -283,10 +381,12 @@ td:last-child{text-align:right}
             <button class="filter-btn" onclick="filterHistory('loss',this)">Losers</button>
           </div>
         </div>
+        <div class="tbl-scroll">
         <table>
-          <thead><tr><th>Date</th><th>Symbol</th><th>Direction</th><th>Entry</th><th>Exit</th><th>Size</th><th>P&L</th><th>R Multiple</th><th></th></tr></thead>
+          <thead><tr><th>Date</th><th>Symbol</th><th>Dir</th><th>Entry</th><th>Exit</th><th>Size</th><th>P&L</th><th>R</th><th></th></tr></thead>
           <tbody id="hist-tbody"></tbody>
         </table>
+        </div>
       </div>
     </div>
   </div>
@@ -338,7 +438,7 @@ td:last-child{text-align:right}
         <div class="form-group">
           <label class="form-label">Symbol</label>
           <select class="form-input" id="f-symbol">
-            <optgroup label="Gold"><option value="XAUTUSDT">XAU/USD</option></optgroup>
+            <optgroup label="Gold / Spot"><option value="XAUUSD">XAU/USD Spot (gold-api.com)</option><option value="XAUTUSDT">XAUT/USDT (Tether Gold token)</option></optgroup>
             <optgroup label="Crypto">
               <option value="BTCUSDT">BTC/USDT</option><option value="ETHUSDT">ETH/USDT</option>
               <option value="SOLUSDT">SOL/USDT</option><option value="BNBUSDT">BNB/USDT</option>
@@ -385,11 +485,10 @@ td:last-child{text-align:right}
 
 <script type="module">
 // ════════════════════════════════════════════════════════
-//  🔧 FIREBASE CONFIG — GANTI NILAI DI BAWAH INI
-//  Ambil dari: Firebase Console → Project Settings → Your apps → Web
+//  🔧 FIREBASE CONFIG
 // ════════════════════════════════════════════════════════
 const FIREBASE_CONFIG = {
- apiKey: "AIzaSyClc59Muo0ajiNjvC5s0rq74BtDrce6rp8",
+  apiKey: "AIzaSyClc59Muo0ajiNjvC5s0rq74BtDrce6rp8",
   authDomain: "journal-97254.firebaseapp.com",
   projectId: "journal-97254",
   storageBucket: "journal-97254.firebasestorage.app",
@@ -397,7 +496,6 @@ const FIREBASE_CONFIG = {
   appId: "1:101188824456:web:a0ca25a26e63704b361e3d",
   measurementId: "G-0RLFMJFBDP"
 };
-// ════════════════════════════════════════════════════════
 
 import { initializeApp }           from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword,
@@ -422,7 +520,7 @@ function hideLoading() {
 setProgress(20, 'Checking config...');
 
 if (!isConfigured) {
-  alert('⚠ Firebase belum dikonfigurasi! Buka file HTML dan isi FIREBASE_CONFIG dengan nilai dari Firebase Console kamu.');
+  alert('⚠ Firebase belum dikonfigurasi!');
   hideLoading();
   document.getElementById('auth-screen').style.display = 'flex';
 }
@@ -573,16 +671,56 @@ function showApp(user) {
   document.getElementById('acc-tradecount').textContent = trades.length + ' trades';
   renderAll();
   setSaveStatus('saved');
-  if(!tickInterval) tickInterval = setInterval(tick, 5000);
+  if(!tickInterval) tickInterval = setInterval(tick, 8000);
   tick();
 }
 
-const SYMS = ['XAUTUSDT','BTCUSDT','ETHUSDT','SOLUSDT','BNBUSDT','XRPUSDT','DOGEUSDT','ADAUSDT','AVAXUSDT'];
-const SYM_D = {XAUTUSDT:'XAU/USD',BTCUSDT:'BTC/USDT',ETHUSDT:'ETH/USDT',SOLUSDT:'SOL/USDT',BNBUSDT:'BNB/USDT',XRPUSDT:'XRP/USDT',DOGEUSDT:'DOGE/USDT',ADAUSDT:'ADA/USDT',AVAXUSDT:'AVAX/USDT'};
-let livePrices={}, prevPrices={}, histFilter='all';
+// ════════════════════════════════════════════════════════
+//  PRICE FETCHING — Split architecture
+//
+//  XAU/USD spot  → gold-api.com (free, no key, CORS OK)
+//                  → GoldPrice.org API (fallback)
+//                  → goldpriceapi.com (fallback)
+//
+//  Crypto        → Binance → CoinGecko → Kraken
+//
+//  XAU/USD & XAUT/USDT ditampilkan TERPISAH:
+//  - XAUUSD  = spot harga emas (dari gold-api.com)
+//  - XAUTUSDT = harga token Tether Gold di Binance (beda ~$3-5)
+// ════════════════════════════════════════════════════════
 
-const symDec = sym => { if(sym==='XAUTUSDT') return 2; const p=livePrices[sym]||0; return p<0.01?6:p<1?4:p<10?3:2; };
-const fmt = (n,pre='$') => { if(n===null||n===undefined||isNaN(n)) return '—'; const abs=Math.abs(n), s=abs>=1000?pre+(abs/1000).toFixed(2)+'K':pre+abs.toFixed(2); return (n<0?'-':'')+s; };
+// XAUTUSDT tetap ada untuk yang trade di Binance (token)
+// Tambah XAUUSD sebagai instrument baru = spot gold
+const SYMS = ['XAUUSD','XAUTUSDT','BTCUSDT','ETHUSDT','SOLUSDT','BNBUSDT','XRPUSDT','DOGEUSDT','ADAUSDT','AVAXUSDT'];
+const SYM_D = {
+  XAUUSD:   'XAU/USD',   // ← spot gold (dari gold-api.com)
+  XAUTUSDT: 'XAUT/USDT', // ← Tether Gold token (dari Binance)
+  BTCUSDT:'BTC/USDT', ETHUSDT:'ETH/USDT', SOLUSDT:'SOL/USDT',
+  BNBUSDT:'BNB/USDT', XRPUSDT:'XRP/USDT', DOGEUSDT:'DOGE/USDT',
+  ADAUSDT:'ADA/USDT', AVAXUSDT:'AVAX/USDT'
+};
+
+// Crypto syms yang di-fetch dari Binance/CoinGecko/Kraken (exclude XAUUSD)
+const CRYPTO_SYMS = ['XAUTUSDT','BTCUSDT','ETHUSDT','SOLUSDT','BNBUSDT','XRPUSDT','DOGEUSDT','ADAUSDT','AVAXUSDT'];
+const CG_IDS = {
+  BTCUSDT:'bitcoin', ETHUSDT:'ethereum', SOLUSDT:'solana',
+  BNBUSDT:'binancecoin', XRPUSDT:'ripple', DOGEUSDT:'dogecoin',
+  ADAUSDT:'cardano', AVAXUSDT:'avalanche-2', XAUTUSDT:'tether-gold'
+};
+
+let livePrices={}, prevPrices={}, histFilter='all';
+let goldSource='—', cryptoSource='—';
+
+const symDec = sym => {
+  if(sym==='XAUUSD'||sym==='XAUTUSDT') return 2;
+  const p=livePrices[sym]||0;
+  return p<0.01?6:p<1?4:p<10?3:2;
+};
+const fmt = (n,pre='$') => {
+  if(n===null||n===undefined||isNaN(n)) return '—';
+  const abs=Math.abs(n), s=abs>=1000?pre+(abs/1000).toFixed(2)+'K':pre+abs.toFixed(2);
+  return (n<0?'-':'')+s;
+};
 const fmtP = (n,sym) => (n===null||n===undefined||isNaN(n))?'—':n.toFixed(symDec(sym));
 const fmtPct = n => (n===null||isNaN(n))?'—':(n>0?'+':'')+n.toFixed(2)+'%';
 const calcPnl = t => !t.exit?null:+((t.dir==='Long'?(t.exit-t.entry):(t.entry-t.exit))*t.size).toFixed(2);
@@ -594,15 +732,127 @@ const calcProg = t => {
   return range<=0?null:Math.min(100,Math.max(0,((t.dir==='Long'?cp-t.sl:t.sl-cp)/range)*100));
 };
 
+// ── XAU SPOT SOURCES ─────────────────────────────────
+
+// gold-api.com — free, no key, CORS enabled, no rate limit
+async function fetchGoldAPI() {
+  const r = await fetch('https://api.gold-api.com/price/XAU', { signal: AbortSignal.timeout(6000) });
+  if (!r.ok) throw new Error('gold-api ' + r.status);
+  const d = await r.json();
+  // response: { price: 4558.90, ... }
+  if (!d.price) throw new Error('gold-api no price');
+  return { price: parseFloat(d.price), source: 'gold-api.com' };
+}
+
+// GoldPriceZ.com public API (fallback)
+async function fetchGoldPriceZ() {
+  const r = await fetch('https://data-asg.goldprice.org/dbXRates/USD', { signal: AbortSignal.timeout(6000) });
+  if (!r.ok) throw new Error('goldpricez ' + r.status);
+  const d = await r.json();
+  // response: { items: [{ xauPrice: 4500 }] }
+  const price = d?.items?.[0]?.xauPrice;
+  if (!price) throw new Error('goldpricez no price');
+  return { price: parseFloat(price), source: 'GoldPriceZ' };
+}
+
+// Backup: goldapi.io — needs free key but returns CORS headers (user can add own key)
+// Skipped here since requires API key — if user wants to add: https://www.goldapi.io/
+
+async function fetchXauSpot() {
+  const sources = [fetchGoldAPI, fetchGoldPriceZ];
+  for (const fn of sources) {
+    try {
+      const { price, source } = await fn();
+      if (price > 100 && price < 100000) { // sanity check
+        livePrices['XAUUSD'] = price;
+        goldSource = source;
+        return;
+      }
+    } catch(e) { console.warn('Gold spot fetch failed:', e.message); }
+  }
+  // All failed — keep last cached value, mark stale
+  if (!livePrices['XAUUSD']) goldSource = 'unavailable';
+}
+
+// ── CRYPTO SOURCES ────────────────────────────────────
+
+async function fetchBinance() {
+  const r = await fetch(
+    `https://api.binance.com/api/v3/ticker/24hr?symbols=${encodeURIComponent(JSON.stringify(CRYPTO_SYMS))}`,
+    { signal: AbortSignal.timeout(5000) }
+  );
+  if (!r.ok) throw new Error('Binance ' + r.status);
+  const data = await r.json();
+  const prices = {};
+  data.forEach(d => { prices[d.symbol] = parseFloat(d.lastPrice); });
+  return { prices, source: 'Binance' };
+}
+
+async function fetchCoinGecko() {
+  const ids = Object.entries(CG_IDS).map(([,v])=>v).join(',');
+  const r = await fetch(
+    `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`,
+    { signal: AbortSignal.timeout(7000) }
+  );
+  if (!r.ok) throw new Error('CoinGecko ' + r.status);
+  const data = await r.json();
+  const prices = {};
+  Object.entries(CG_IDS).forEach(([sym, id]) => { if (data[id]?.usd) prices[sym] = data[id].usd; });
+  if (!Object.keys(prices).length) throw new Error('CoinGecko empty');
+  return { prices, source: 'CoinGecko' };
+}
+
+async function fetchKraken() {
+  const r = await fetch(
+    'https://api.kraken.com/0/public/Ticker?pair=XBTUSD,ETHUSD,SOLUSD,XRPUSD,DOGEUSD,ADAUSD,AVAXUSD',
+    { signal: AbortSignal.timeout(6000) }
+  );
+  if (!r.ok) throw new Error('Kraken ' + r.status);
+  const data = await r.json();
+  if (data.error?.length) throw new Error('Kraken error');
+  const map = { XXBTZUSD:'BTCUSDT', XETHZUSD:'ETHUSDT', SOLUSD:'SOLUSDT',
+                XXRPZUSD:'XRPUSDT', XDGUSD:'DOGEUSDT', ADAUSD:'ADAUSDT', AVAXUSD:'AVAXUSDT' };
+  const prices = {};
+  Object.entries(data.result||{}).forEach(([pair, info]) => {
+    const sym = map[pair]; if (sym) prices[sym] = parseFloat(info.c[0]);
+  });
+  if (!Object.keys(prices).length) throw new Error('Kraken empty');
+  return { prices, source: 'Kraken' };
+}
+
+async function fetchCrypto() {
+  const cryptoSources = [fetchBinance, fetchCoinGecko, fetchKraken];
+  for (const fn of cryptoSources) {
+    try {
+      const { prices, source } = await fn();
+      Object.entries(prices).forEach(([k,v]) => { if(v && !isNaN(v)) livePrices[k] = v; });
+      cryptoSource = source;
+      return;
+    } catch(e) { console.warn('Crypto fetch failed:', e.message); }
+  }
+}
+
 async function fetchPrices() {
-  try {
-    const r=await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbols=${encodeURIComponent(JSON.stringify(SYMS))}`);
-    if(!r.ok) throw 0;
-    const data=await r.json(); prevPrices={...livePrices};
-    data.forEach(d=>{ livePrices[d.symbol]=parseFloat(d.lastPrice); });
-    document.getElementById('live-dot').style.background='#4A9E6A';
-    document.getElementById('live-label').textContent='Live';
-  } catch { document.getElementById('live-dot').style.background='#D97070'; document.getElementById('live-label').textContent='Reconnecting'; }
+  prevPrices = { ...livePrices };
+
+  // Fetch XAU spot & crypto in parallel
+  await Promise.allSettled([fetchXauSpot(), fetchCrypto()]);
+
+  const hasData = Object.keys(livePrices).length > 0;
+  const xauOk = !!livePrices['XAUUSD'];
+  const cryptoOk = !!livePrices['BTCUSDT'];
+
+  if (hasData) {
+    document.getElementById('live-dot').style.background = '#4A9E6A';
+    document.getElementById('live-label').textContent = 'Live';
+    // Show gold source in pill since that's the primary concern
+    const src = xauOk ? goldSource : cryptoSource;
+    document.getElementById('price-source').textContent = '· ' + src;
+  } else {
+    document.getElementById('live-dot').style.background = '#D97070';
+    document.getElementById('live-label').textContent = 'Offline';
+    document.getElementById('price-source').textContent = '· cached';
+  }
 }
 
 function renderTicker() {
@@ -670,7 +920,7 @@ function renderOpen() {
       <td>${t.size}</td>
       <td class="${pnl===null?'':pnl>=0?'pnl-pos':'pnl-neg'}">${pnl===null?'<span style="color:var(--text-subtle)">Pending</span>':fmt(pnl)+' <span style="opacity:.6;font-size:10px">('+fmtPct(pnlPct)+')</span>'}</td>
       <td>${prog!==null?`<div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:${prog.toFixed(0)}%;background:${pc}"></div></div><div class="progress-txt">${prog.toFixed(0)}% to TP</div></div>`:isLim?'<span style="font-size:10px;color:var(--text-subtle)">Waiting</span>':'—'}</td>
-      <td>${isLim?'<span class="badge limit">Limit Pending</span>':'<span class="badge open">Open</span>'}</td>
+      <td>${isLim?'<span class="badge limit">Limit</span>':'<span class="badge open">Open</span>'}</td>
       <td><div class="row-action"><button class="act-btn" onclick="editTrade(${t.id})">Edit</button><button class="act-btn del" onclick="deleteTrade(${t.id})">Del</button></div></td>
     </tr>`;
   }).join('');
@@ -684,7 +934,7 @@ function renderHistory() {
   if(!data.length){tbody.innerHTML=`<tr><td colspan="9"><div class="empty"><div class="empty-icon">FDN</div>No trades found</div></td></tr>`;return;}
   tbody.innerHTML=[...data].reverse().map(t=>{
     const pnl=calcPnl(t), r=calcR(t);
-    const rb=t.closedReason?`<span class="badge ${t.closedReason==='TP'?'tp-hit':'sl-hit'}" style="margin-left:6px">${t.closedReason}</span>`:'';
+    const rb=t.closedReason?`<span class="badge ${t.closedReason==='TP'?'tp-hit':'sl-hit'}" style="margin-left:4px">${t.closedReason}</span>`:'';
     return `<tr>
       <td>${t.date_close||t.date}</td>
       <td><span class="td-sym">${SYM_D[t.symbol]||t.symbol}</span></td>
@@ -707,7 +957,7 @@ function renderEquity() {
   let cum=0; const pts=[{v:0}]; closed.forEach(t=>{cum+=calcPnl(t);pts.push({v:cum});});
   if(pts.length<2){document.getElementById('equity-svg').innerHTML='';return;}
   const vals=pts.map(p=>p.v), mn=Math.min(...vals), mx=Math.max(...vals), range=mx-mn||1;
-  const W=440,H=140,pad=20,xS=(W-2*pad)/(pts.length-1),yS=(H-2*pad)/range;
+  const W=440,H=130,pad=20,xS=(W-2*pad)/(pts.length-1),yS=(H-2*pad)/range;
   const pts_s=pts.map((p,i)=>`${pad+i*xS},${H-pad-(p.v-mn)*yS}`).join(' ');
   const lx=pad+(pts.length-1)*xS, ly=H-pad-(pts[pts.length-1].v-mn)*yS;
   document.getElementById('equity-svg').innerHTML=`
@@ -753,7 +1003,7 @@ window.switchPage = (name, el) => {
 window.openModal = (t=null) => {
   document.getElementById('modal-title-txt').textContent = t?'Edit Trade':'Log New Trade';
   document.getElementById('edit-idx').value = t?t.id:'';
-  ['symbol','dir','type'].forEach(f=>document.getElementById('f-'+f).value=t?t[f]:(f==='symbol'?'XAUTUSDT':f==='dir'?'Long':'market'));
+  ['symbol','dir','type'].forEach(f=>document.getElementById('f-'+f).value=t?t[f]:(f==='symbol'?'XAUUSD':f==='dir'?'Long':'market'));
   document.getElementById('f-entry').value  = t?t.entry:'';
   document.getElementById('f-exit').value   = t&&t.exit?t.exit:'';
   document.getElementById('f-sl').value     = t&&t.sl?t.sl:'';
